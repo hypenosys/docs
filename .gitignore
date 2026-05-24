@@ -1,0 +1,27 @@
+# Hypenosys Obsidian Vault — .gitignore
+# Tracks plugin configs and settings so the team shares
+# the same setup. Excludes workspace state (causes merge
+# conflicts) and plugin data.json (may contain auth tokens).
+
+# Obsidian workspace state (device-specific, causes constant conflicts)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/workspace-mobile.json.bak
+
+# Cache files (regenerated automatically, no need to track)
+.obsidian/cache
+.obsidian/graph-cache.json
+
+# Plugin data that contains tokens or sensitive paths
+.obsidian/plugins/obsidian-git/data.json
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Obsidian trash
+.trash/
+
+# We DO track the rest of .obsidian/ so plugins, themes,
+# hotkeys and community-plugins.json are shared across the team.
