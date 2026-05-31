@@ -130,6 +130,7 @@ docs/
 ├── 06-Produccion/      # Roadmap, sprints, milestones
 ├── 07-Assets-y-Recursos/
 ├── 08-Archivo/         # Lo que ya no está activo pero no tiramos
+├── 09-Repositorios/    # Documentación de los repositorios de Hypenosys
 ├── Attachments/        # Imágenes y archivos adjuntos
 └── Templates/          # Plantillas reutilizables
 ```

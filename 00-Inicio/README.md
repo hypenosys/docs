@@ -24,5 +24,6 @@ Consulta [[00-Inicio/Onboarding-Obsidian-Git]] para configurar tu entorno.
 | `06-Produccion` | Sprints, reuniones, roadmap |
 | `07-Assets-y-Recursos` | Links, herramientas, recursos externos |
 | `08-Archivo` | Todo lo que ya no está activo pero no se borra |
+| `09-Repositorios` | Documentación de los repositorios de Hypenosys |
 | `Templates` | Plantillas de notas |
 | `Attachments` | Imágenes y archivos adjuntos |
