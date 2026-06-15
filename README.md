@@ -119,6 +119,8 @@ Esto hace en orden: guardar cambios → commit → pull → push. Si hay conflic
 
 ## Estructura del repositorio
 
+Consulta el **[[INDEX|Índice Maestro de Documentación]]** para una navegación detallada por áreas y propósitos.
+
 ```
 docs/
 ├── 00-Inicio/          # Por aquí se empieza
