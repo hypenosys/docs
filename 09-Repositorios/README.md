@@ -1,8 +1,10 @@
-# Repositorios de Hypenosys
+# 09 - Repositorios
 
-En esta sección se documentan todos los repositorios pertenecientes a la organización Hypenosys, detallando su arquitectura, propósito y stack tecnológico.
+Documentación de los diferentes repositorios de código de Hypenosys.
 
-## Lista de Repositorios
+## Repositorios Actuales
+- [[Web-hypenosys.github.io|Web del Estudio]]
+- [[Guia-Desarrollo-Local-Jekyll|Desarrollo Local Jekyll]]
 
-- [[Web-hypenosys.github.io|Web (hypenosys.github.io)]]: El hub central del estudio.
-- [[Guia-Desarrollo-Local-Jekyll|Guía de Desarrollo Local (Jekyll)]]: Configuración del entorno de desarrollo para la web.
+## Plantillas
+- [[Templates/Template-Documentacion-Repositorio|Nueva Documentación de Repo]]
