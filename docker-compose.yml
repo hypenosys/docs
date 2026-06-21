@@ -1,0 +1,139 @@
+services:
+  postgresql:
+    image: postgres:16-alpine
+    container_name: hypenosys-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - ./services/postgresql/data:/var/lib/postgresql/data
+      - ./services/postgresql/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - hypenosys-net
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    container_name: hypenosys-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - ./services/redis/data:/data
+    networks:
+      - hypenosys-net
+    ports:
+      - "6379:6379"
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: hypenosys-qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - ./services/qdrant/storage:/qdrant/storage
+    networks:
+      - hypenosys-net
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: hypenosys-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./services/ollama/data:/root/.ollama
+    networks:
+      - hypenosys-net
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  forgejo:
+    image: codeberg.org/forgejo/forgejo:10
+    container_name: hypenosys-forgejo
+    restart: unless-stopped
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    environment:
+      - FORGEJO__database__DB_TYPE=${FORGEJO_DB_TYPE}
+      - FORGEJO__database__HOST=${FORGEJO_DB_HOST}
+      - FORGEJO__database__NAME=${FORGEJO_DB_NAME}
+      - FORGEJO__database__USER=${FORGEJO_DB_USER}
+      - FORGEJO__database__PASSWD=${FORGEJO_DB_PASS}
+    volumes:
+      - ./services/forgejo/data:/data
+    networks:
+      - hypenosys-net
+    ports:
+      - "3000:3000"
+      - "2222:22"
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: hypenosys-n8n
+    restart: unless-stopped
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgresql
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=n8n
+      - DB_POSTGRESDB_USER=n8n
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
+      - N8N_USER_MANAGEMENT_JWT_SECRET=${N8N_USER_MANAGEMENT_JWT_SECRET}
+      - N8N_BLOCK_PYTHON_CAN_ACCESS_MAIN_PROCESS=${N8N_BLOCK_PYTHON_CAN_ACCESS_MAIN_PROCESS}
+    volumes:
+      - ./services/n8n/data:/home/node/.n8n
+    networks:
+      - hypenosys-net
+    ports:
+      - "5678:5678"
+
+  matrix:
+    image: matrixdotorg/synapse:latest
+    container_name: hypenosys-matrix
+    restart: unless-stopped
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    environment:
+      - SYNAPSE_SERVER_NAME=${SYNAPSE_SERVER_NAME}
+      - SYNAPSE_REPORT_STATS=${SYNAPSE_REPORT_STATS}
+      - SYNAPSE_CONFIG_PATH=/data/homeserver.yaml
+      - POSTGRES_USER=${SYNAPSE_DB_USER}
+      - POSTGRES_PASSWORD=${SYNAPSE_DB_PASSWORD}
+      - POSTGRES_DB=synapse
+      - POSTGRES_HOST=postgresql
+    volumes:
+      - ./services/matrix/data:/data
+    networks:
+      - hypenosys-net
+    ports:
+      - "8008:8008"
+
+networks:
+  hypenosys-net:
+    name: hypenosys-internal
+    driver: bridge

@@ -41,6 +41,11 @@ Este documento sirve para rastrear qué documentos existen, cuáles faltan y qui
 |---|---|---|---|
 | Roadmap 2024/25 | 🟡 En progreso | Producción | |
 
+## 09 - Repositorios
+| Documento | Estado | Responsable | Notas |
+|---|---|---|---|
+| Backend Local IA | 🟢 Finalizado | Tech Lead | Orquestación Docker e IA local |
+
 ---
 ## Leyenda
 - 🔴 **No iniciado:** Falta crear el documento.
