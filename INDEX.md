@@ -53,7 +53,7 @@ Bienvenido al índice central. Si te pierdes aquí, es que probablemente no debe
 
 ### [[09-Repositorios|09 - Repositorios]]
 *La red de código.*
-- **Contenido:** Guías específicas para cada repositorio de GitHub del estudio. Incluye el nuevo [[09-Repositorios/Backend-IA|Backend Local IA]].
+- **Contenido:** Guías específicas para cada repositorio de GitHub del estudio. Incluye el nuevo [[09-Repositorios/Backend-IA|Backend Local IA]] y la guía de [[09-Repositorios/Cognito-Agent|Cognito Agent]].
 - **Propósito:** Centralizar el conocimiento de nuestra infraestructura.
 
 ---
